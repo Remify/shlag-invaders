@@ -90,6 +90,8 @@ Spaceship.prototype.sendUniformVariables = function() { // Envoie les variables 
 }
 
 Spaceship.prototype.draw = function() {
+
+	gl.enable(gl.BLEND);
 	// active le buffer de position et fait le lien avec l'attribut aVertexPosition dans le shader
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
 	gl.vertexAttribPointer(spaceshipShader.vertexPositionAttribute, this.vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
@@ -101,6 +103,7 @@ Spaceship.prototype.draw = function() {
 	// dessine les buffers actifs
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.triangles);
 	gl.drawElements(gl.TRIANGLES, this.triangles.numItems, gl.UNSIGNED_SHORT, 0);
+	gl.disable(gl.BLEND);
 }
 
 
