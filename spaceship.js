@@ -16,6 +16,7 @@ function initSpaceshipShader() {
 
      // adresse de la variable uniforme uOffset dans le shader
     spaceshipShader.positionUniform = gl.getUniformLocation(spaceshipShader, "uPosition");
+    spaceshipShader.maTextureUniform = gl.getUniformLocation(spaceshipShader, "uSpaceshipTexture");
 
     console.log("spaceship shader initialized");
 }
@@ -73,6 +74,20 @@ Spaceship.prototype.initParameters = function() {
 	this.position = [0.0,-0.7];
 }
 
+
+Spaceship.prototype.init = function(){
+    gl.activeTexture(gl.TEXTURE0); // on active l'unite de texture 0
+    gl.bindTexture(gl.TEXTURE_2D, window['spaceshipTexture']); // on place maTexture dans l'unitÃ© active
+    gl.enable(gl.BLEND);
+    gl.depthMask(false);
+    gl.blendEquation(gl.FUNC_ADD);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.uniform1i(this.maTextureUniform, 0); // on dit au shader que maTextureUniform se trouve sur l'unite de texture 0
+    this.draw();
+    gl.depthMask(true);
+    gl.disable(gl.BLEND);
+}
+
 Spaceship.prototype.setParameters = function(elapsed) {
 	// on pourrait animer des choses ici
 }
@@ -94,7 +109,7 @@ Spaceship.prototype.draw = function() {
 	gl.enable(gl.BLEND);
 	// active le buffer de position et fait le lien avec l'attribut aVertexPosition dans le shader
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
-	gl.vertexAttribPointer(spaceshipShader.vertexPositionAttribute, this.vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
+	gl.vertexAttribPointer(spaceshipShader.vertexPositionAthandleLoadedTexturetribute, this.vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
 	// active le buffer de coords
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.coordBuffer);

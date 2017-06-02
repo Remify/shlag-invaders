@@ -164,10 +164,13 @@ void main(void) {
 precision highp float; // precision des nombres flottant
 
 varying vec2 vTextureCoord; // recuperation de la coord rasterisee
+uniform sampler2D uSpaceshipTexture; // texture en entree
 
 void main(void) {
     // couleur par defaut du vaisseau... a changer
-    gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+    //gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+    gl_FragColor = texture2D(uSpaceshipTexture, vTextureCoord) * vec4(1,1.0,1.0,1.0);
+
 
 }
 </script>
@@ -205,7 +208,7 @@ void main(void) {
         // dessin du vaisseau (shader par defaut ici)
         gl.useProgram(spaceship.shader());
         spaceship.sendUniformVariables();
-        spaceship.draw();
+        spaceship.init();
     }
 
     // une bonne manière de gerer les evenements claviers
@@ -272,6 +275,8 @@ void main(void) {
         initBackgroundShader();
         initSpaceshipShader();
 
+        initTexture();
+
         // init de tous les objets
         heightfield = new Heightfield();
         background = new Background(fbo.texture(0));
@@ -295,6 +300,18 @@ void main(void) {
 
         // dessine la scene
         tick();
+    }
+
+    // Variables globales
+    var spaceshipTexture;
+
+    function initTexture() {
+        spaceshipTexture = gl.createTexture();
+        spaceshipTexture.image = new Image();
+        spaceshipTexture.image.src = "resources/spaceship.png";
+        spaceshipTexture.image.onload = function () {
+            handleLoadedTexture(spaceshipTexture);
+        }
     }
 
 
