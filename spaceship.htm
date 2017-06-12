@@ -11,7 +11,8 @@
 <script type="text/javascript" src="spaceship.js"></script>
     <script type="text/javascript" src="enemy.js"></script>
 
-<script id="heightfield-vs" type="x-shader/x-vertex">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script id="heightfield-vs" type="x-shader/x-vertex">
     // *** le vertex shader ***
     attribute vec3 aVertexPosition; // la position du sommet
     attribute vec2 aVertexCoord; // sa coordonnee de texture
@@ -416,5 +417,25 @@ void main(void) {
 
 
 <body onload="webGLStart();">
-    <canvas id="SpaceShip" style="border: none;" width="800" height="800"></canvas>
+
+<div class="main-section">
+    <div class="canvas">
+        <canvas id="SpaceShip" style="border: none;" width="800" height="800"></canvas>
+    </div>
+    <div id="interface">
+        <h1>Shlag Invaders</h1>
+        <nav>
+            <div class="btn-logic">Liste Boutons</div>
+            <div id="lvl">
+                <p>lvl :</p>
+            </div>
+            <div id="score">
+                <p>score :</p>
+            </div>
+        </nav>
+    </div>
+</div>
+
+
+
 </body></html>
