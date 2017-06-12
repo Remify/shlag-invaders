@@ -3,13 +3,14 @@
     <title>SpaceShip</title>
     <meta http-equiv="content-type" content="text/html; charset=windows-1252">
 
-    <script type="text/javascript" src="gl-matrix.js"></script>
-    <script type="text/javascript" src="webgl-utils.js"></script>
-    <script type="text/javascript" src="game-utils.js"></script>
-    <script type="text/javascript" src="fbo.js"></script>
-    <script type="text/javascript" src="heightfield.js"></script>
-    <script type="text/javascript" src="background.js"></script>
-    <script type="text/javascript" src="spaceship.js"></script>
+<script type="text/javascript" src="gl-matrix.js"></script>
+<script type="text/javascript" src="webgl-utils.js"></script>
+<script type="text/javascript" src="game-utils.js"></script>
+<script type="text/javascript" src="fbo.js"></script>
+<script type="text/javascript" src="heightfield.js"></script>
+<script type="text/javascript" src="background.js"></script>
+<script type="text/javascript" src="spaceship.js"></script>
+    <script type="text/javascript" src="enemy.js"></script>
 
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
@@ -217,9 +218,45 @@ void main(void) {
 
 }
 
-    </script>
+    <script id="enemy-vs" type="x-shader/x-vertex">
+    // *** le vertex shader ***
+    attribute vec3 aVertexPosition; // la position du sommet
+    attribute vec2 aVertexCoord; // sa coordonnee de texture
 
-    <script type="text/javascript">
+    uniform vec2 uPosition; // position du vaisseau
+    varying vec2 vTextureCoord; // on souhaite rasteriser la coordonnee
+
+    void main(void) {
+        // projection de la position
+        gl_Position = vec4(aVertexPosition+vec3(uPosition,0.0), 1.0);
+
+        // stockage de la coordonnee de texture
+        vTextureCoord = aVertexCoord;
+    }
+</script>
+    <script id="enemy-fs" type="x-shader/x-fragment">
+// *** le fragment shader ***
+precision highp float; // precision des nombres flottant
+
+varying vec2 vTextureCoord; // recuperation de la coord rasterisee
+uniform sampler2D uEnemyTexture; // texture en entree
+
+void main(void) {
+    // couleur par defaut du vaisseau... a changer
+    //gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+    gl_FragColor = texture2D(uEnemyTexture, vTextureCoord) * vec4(1,1.0,1.0,1.0);
+
+
+}
+</script>
+
+<script type="text/javascript">
+
+    var fbo; // le FBO utilis� pour rendre la texture de hauteur
+    var heightfield; // l'objet heightfield, sa g�om�trie, son shader
+    var background; // l'objet background, sa g�om�trie, son shader
+    var spaceship; // l'objet spaceship, sa g�om�trie, son shader
+    var enemies = [] ;
 
         var fbo; // le FBO utilis� pour rendre la texture de hauteur
         var heightfield; // l'objet heightfield, sa g�om�trie, son shader
@@ -244,10 +281,22 @@ void main(void) {
             // desactivation du FBO (on dessine sur l'ecran maintenant)
             gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
-            // dessin du background (utilise la texture dessin�e pr�c�demment)
-            gl.useProgram(background.shader());
-            background.sendUniformVariables();
-            background.draw();
+        // dessin du vaisseau (shader par defaut ici)
+        gl.useProgram(spaceship.shader());
+        spaceship.sendUniformVariables();
+        spaceship.init();
+
+
+        // dessin du vaisseau (shader par defaut ici)
+
+        enemies.forEach(function (enemy) {
+
+            gl.useProgram(enemy.shader());
+            enemy.sendUniformVariables();
+            enemy.init();
+
+        })
+    }
 
             // dessin du vaisseau (shader par defaut ici)
             gl.useProgram(spaceship.shader());
@@ -306,10 +355,11 @@ void main(void) {
         }
 
 
-        function webGLStart() {
-            // initialisation du canvas et des objets OpenGL
-            var canvas = document.getElementById("SpaceShip");
-            initGL(canvas);
+        // init de tous les shaders
+        initHeightfieldShader();
+        initBackgroundShader();
+        initSpaceshipShader();
+        initEnemyShader();
 
             // init FBO
             fbo = new FBO(canvas.width, canvas.height, 1, false);
@@ -319,7 +369,10 @@ void main(void) {
             initBackgroundShader();
             initSpaceshipShader();
 
-            initTexture();
+        enemies.push(new Enemy());
+
+        // la couleur de fond sera noire
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
             // init de tous les objets
             heightfield = new Heightfield();
@@ -339,26 +392,29 @@ void main(void) {
             canvas.addEventListener('mousemove', mouseMove, true);
             //canvas.addEventListener('mouseup', tbMouseUp, true);
 
-            document.onkeydown = handleKeyDown;
-            document.onkeyup = handleKeyUp;
+    // Variables globales
+    var spaceshipTexture;
+    var enemyTexture;
 
             // dessine la scene
             tick();
         }
 
+
+        enemyTexture = gl.createTexture();
+        enemyTexture.image = new Image();
+        enemyTexture.image.src = "resources/Carre.png";
+        enemyTexture.image.onload = function () {
+            handleLoadedTexture(enemyTexture);
+        }
+    }
+
         // Variables globales
         var spaceshipTexture;
 
-        function initTexture() {
-            spaceshipTexture = gl.createTexture();
-            spaceshipTexture.image = new Image();
-            spaceshipTexture.image.src = "resources/spaceship.png";
-            spaceshipTexture.image.onload = function () {
-                handleLoadedTexture(spaceshipTexture);
-            }
-        }
-        
-    </script>
+
+
+</script>
 
 
 </head>

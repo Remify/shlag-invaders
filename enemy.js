@@ -1,27 +1,27 @@
-var spaceshipShader;
+var EnemyShader;
 
-function initSpaceshipShader() {
-	spaceshipShader = initShaders("spaceship-vs","spaceship-fs");
+function initEnemyShader() {
+	EnemyShader = initShaders("enemy-vs","enemy-fs");
     
     // active ce shader
-    gl.useProgram(spaceshipShader);
+    gl.useProgram(EnemyShader);
 
     // recupere la localisation de l'attribut dans lequel on souhaite acceder aux positions
-    spaceshipShader.vertexPositionAttribute = gl.getAttribLocation(spaceshipShader, "aVertexPosition");
-    gl.enableVertexAttribArray(spaceshipShader.vertexPositionAttribute); // active cet attribut 
+    EnemyShader.vertexPositionAttribute = gl.getAttribLocation(EnemyShader, "aVertexPosition");
+    gl.enableVertexAttribArray(EnemyShader.vertexPositionAttribute); // active cet attribut 
 
     // pareil pour les coordonnees de texture 
-    spaceshipShader.vertexCoordAttribute = gl.getAttribLocation(spaceshipShader, "aVertexCoord");
-    gl.enableVertexAttribArray(spaceshipShader.vertexCoordAttribute);
+    EnemyShader.vertexCoordAttribute = gl.getAttribLocation(EnemyShader, "aVertexCoord");
+    gl.enableVertexAttribArray(EnemyShader.vertexCoordAttribute);
 
      // adresse de la variable uniforme uOffset dans le shader
-    spaceshipShader.positionUniform = gl.getUniformLocation(spaceshipShader, "uPosition");
-    spaceshipShader.maTextureUniform = gl.getUniformLocation(spaceshipShader, "uSpaceshipTexture");
+    EnemyShader.positionUniform = gl.getUniformLocation(EnemyShader, "uPosition");
+    EnemyShader.maTextureUniform = gl.getUniformLocation(EnemyShader, "uEnemyTexture");
 
-    console.log("spaceship shader initialized");
+    console.log("Enemy shader initialized");
 }
 
-function Spaceship() {
+function Enemy() {
 	this.initParameters();
 
 	// cree un nouveau buffer sur le GPU et l'active
@@ -65,19 +65,19 @@ function Spaceship() {
 	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(tri), gl.STATIC_DRAW);
     this.triangles.numItems = 6;
     
-    console.log("spaceship initialized");
+    console.log("Enemy initialized");
 }
 
-Spaceship.prototype.initParameters = function() {
+Enemy.prototype.initParameters = function() {
 	this.width = 0.2;
 	this.height = 0.2;
-	this.position = [0.0,-0.7];
+	this.position = [Math.random() * (1.0 - (-1.0)) + -1.0,0.95];
 }
 
 
-Spaceship.prototype.init = function(){
+Enemy.prototype.init = function(){
     gl.activeTexture(gl.TEXTURE0); // on active l'unite de texture 0
-    gl.bindTexture(gl.TEXTURE_2D, window['spaceshipTexture']); // on place maTexture dans l'unitÃ© active
+    gl.bindTexture(gl.TEXTURE_2D, window['enemyTexture']); // on place maTexture dans l'unitÃ© active
     gl.enable(gl.BLEND);
     gl.depthMask(false);
     gl.blendEquation(gl.FUNC_ADD);
@@ -88,32 +88,32 @@ Spaceship.prototype.init = function(){
     gl.disable(gl.BLEND);
 }
 
-Spaceship.prototype.setParameters = function(elapsed) {
+Enemy.prototype.setParameters = function(elapsed) {
 	// on pourrait animer des choses ici
 }
 
-Spaceship.prototype.setPosition = function(x,y) {
+Enemy.prototype.setPosition = function(x,y) {
 	this.position = [x,y];
 }
 
-Spaceship.prototype.shader = function() {
-	return spaceshipShader;
+Enemy.prototype.shader = function() {
+	return EnemyShader;
 }
 
-Spaceship.prototype.sendUniformVariables = function() { // Envoie les variables globales
-	gl.uniform2fv(spaceshipShader.positionUniform,this.position);
+Enemy.prototype.sendUniformVariables = function() { // Envoie les variables globales
+	gl.uniform2fv(EnemyShader.positionUniform,this.position);
 }
 
-Spaceship.prototype.draw = function() {
+Enemy.prototype.draw = function() {
 
 	gl.enable(gl.BLEND);
 	// active le buffer de position et fait le lien avec l'attribut aVertexPosition dans le shader
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
-	gl.vertexAttribPointer(spaceshipShader.vertexPositionAttribute, this.vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
+	gl.vertexAttribPointer(EnemyShader.vertexPositionAttribute, this.vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
 	// active le buffer de coords
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.coordBuffer);
-	gl.vertexAttribPointer(spaceshipShader.vertexCoordAttribute, this.coordBuffer.itemSize, gl.FLOAT, false, 0, 0);
+	gl.vertexAttribPointer(EnemyShader.vertexCoordAttribute, this.coordBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
 	// dessine les buffers actifs
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.triangles);
