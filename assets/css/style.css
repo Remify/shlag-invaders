@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'munro';
+    src: url('../font/Munro.ttf');
+}
+
+body {
+}
+
+.main-section {
+    display: flex;
+    flex-direction: row;
+}
+
+#interface {
+    font-family: munro;
+    width:800px;
+    height: 800px;
+
+}
+
+#interface h1{
+    text-transform: uppercase;
+    text-align: center  ;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
