@@ -71,7 +71,7 @@ function Enemy() {
 Enemy.prototype.initParameters = function() {
 	this.width = 0.2;
 	this.height = 0.2;
-	this.position = [0.0,0.0];
+	this.position = [Math.random() * (1.0 - (-1.0)) + -1.0,0.95];
 }
 
 
