@@ -280,8 +280,12 @@ void main(void) {
         spaceship.init();
 
 
+        // dessin du vaisseau (shader par defaut ici)
+
         enemies.forEach(function (enemy) {
 
+            gl.useProgram(enemy.shader());
+            enemy.sendUniformVariables();
             enemy.init();
 
         })
