@@ -352,8 +352,20 @@ void main(void) {
     }
 
     function mouseClick(event) {
-        rockets.push(new Rocket());
-        console.log('click')
+
+        ShootRockets()
+    }
+
+    function ShootRockets(){
+
+        var r1 = new Rocket();
+        r1.setPosition(r1.position[0]-0.09,r1.position[1]+0.02);
+        var r2 = new Rocket();
+        r2.setPosition(r1.position[0]+0.17,r1.position[1]+0.02);
+
+        rockets.push(r1);
+        rockets.push(r2);
+
     }
 
 
