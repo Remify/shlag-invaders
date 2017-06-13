@@ -29,3 +29,7 @@ nav {
     justify-content: space-around;
     align-items: center;
 }
+
+#score {
+    width: 100px;
+}

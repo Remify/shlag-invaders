@@ -10,6 +10,7 @@ function startGame(){
     running = 1;
     var score = 0;
     setInterval(function () {
+
         if(running == 1){
             $('#score').html('Score :' + score);
             score++;
@@ -28,14 +29,4 @@ function stopGame(){
 function resetGame() {
 
 }
-
-$(document).ready( function() {
-
-
-
-
-
-});
-
-
 
