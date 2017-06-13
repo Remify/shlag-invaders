@@ -76,6 +76,7 @@ Enemy.prototype.initParameters = function() {
 
 
 Enemy.prototype.init = function(){
+	this.move();
     gl.activeTexture(gl.TEXTURE0); // on active l'unite de texture 0
     gl.bindTexture(gl.TEXTURE_2D, window['enemyTexture']); // on place maTexture dans l'unitÃ© active
     gl.enable(gl.BLEND);
@@ -98,6 +99,15 @@ Enemy.prototype.setPosition = function(x,y) {
 
 Enemy.prototype.shader = function() {
 	return EnemyShader;
+}
+
+Enemy.prototype.move = function () {
+
+	var x = this.position[0];
+	var y = this.position[1];
+
+	this.setPosition(x-Math.sin(y) * 0.0030,y - 0.02);
+
 }
 
 Enemy.prototype.sendUniformVariables = function() { // Envoie les variables globales
