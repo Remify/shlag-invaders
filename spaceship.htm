@@ -450,7 +450,7 @@ void main(void) {
     function initTexture() {
         spaceshipTexture = gl.createTexture();
         spaceshipTexture.image = new Image();
-        spaceshipTexture.image.src = "resources/spaceship.png";
+        spaceshipTexture.image.src = "resources/vaisseau-test.png";
         spaceshipTexture.image.onload = function () {
             handleLoadedTexture(spaceshipTexture);
         }
@@ -510,7 +510,7 @@ void main(void) {
                 <p>lvl :</p>
             </div>
             <div id="score">
-                <p>score :</p>
+                <p>score : </p>
             </div>
         </nav>
     </div>
