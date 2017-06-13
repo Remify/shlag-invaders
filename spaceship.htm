@@ -344,7 +344,6 @@ void main(void) {
 
     function tick() {
         requestAnimFrame(tick);
-
         handleKeys();
         drawScene();
         animate();
@@ -373,8 +372,6 @@ void main(void) {
         background = new Background(fbo.texture(0));
         spaceship = new Spaceship();
 
-        enemies.push(new Enemy());
-
         // la couleur de fond sera noire
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
@@ -391,8 +388,6 @@ void main(void) {
         document.onkeydown = handleKeyDown;
         document.onkeyup = handleKeyUp;
 
-        // dessine la scene
-        tick();
     }
 
     // Variables globales
@@ -446,9 +441,9 @@ void main(void) {
         <h1>Shlag Invaders</h1>
         <nav>
             <div class="btn-logic">
-                <button type="button">Start</button>
-                <button type="button">Stop</button>
-                <button type="button">Reset</button>
+                <button type="button" onclick="startGame()">Start</button>
+                <button type="button" onclick="stopGame()">Stop</button>
+                <button type="button" onclick="resetGame()">Reset</button>
             </div>
             <div id="lvl">
                 <p>lvl :</p>
