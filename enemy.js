@@ -71,12 +71,13 @@ function Enemy() {
 Enemy.prototype.initParameters = function() {
 	this.width = 0.2;
 	this.height = 0.2;
-	this.position = [Math.random() * (1.0 - (-1.0)) + -1.0,0.95];
+	this.position = [Math.random() * (1.0 - (-1.0)) + -1.0,1.1];
 }
 
 
 Enemy.prototype.init = function(){
 	this.move();
+	this.checkPosition();
     gl.activeTexture(gl.TEXTURE0); // on active l'unite de texture 0
     gl.bindTexture(gl.TEXTURE_2D, window['enemyTexture']); // on place maTexture dans l'unitÃ© active
     gl.enable(gl.BLEND);
@@ -87,6 +88,20 @@ Enemy.prototype.init = function(){
     this.draw();
     gl.depthMask(true);
     gl.disable(gl.BLEND);
+}
+
+/**
+ * Effectue des actions selon la position
+ */
+Enemy.prototype.checkPosition = function () {
+
+    var x = this.position[0];
+    var y = this.position[1];
+
+    // Supprime l'enemy si en dehors du cadre
+    if(y < -1 || x < -1 || x > 1 ) {
+        delete enemies[enemies.indexOf(this)]; // Vérifier les perf sinon splice
+	}
 }
 
 Enemy.prototype.setParameters = function(elapsed) {
@@ -106,7 +121,7 @@ Enemy.prototype.move = function () {
 	var x = this.position[0];
 	var y = this.position[1];
 
-	this.setPosition(x-Math.sin(y) * 0.0030,y - 0.02);
+	this.setPosition(x-Math.sin(y) * 0.0030,y - 0.01);
 
 }
 

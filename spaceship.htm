@@ -251,6 +251,7 @@ void main(void) {
     var background; // l'objet background, sa g�om�trie, son shader
     var spaceship; // l'objet spaceship, sa g�om�trie, son shader
     var enemies = [] ;
+    var ratioPopEnemies = 0.0005; // Ratio qui augmente avec le temps TODO : Implémentation niveau
 
     function drawScene() {
         // initialisation du viewport
@@ -337,9 +338,11 @@ void main(void) {
 
     function tick() {
         requestAnimFrame(tick);
+
         handleKeys();
         drawScene();
         animate();
+        generateEnemies();
     }
 
 
@@ -405,6 +408,17 @@ void main(void) {
         enemyTexture.image.onload = function () {
             handleLoadedTexture(enemyTexture);
         }
+    }
+
+    /**
+     * Génère de façon aléatoire un ennemi dans enemies[]
+     * Appelé dans le tick
+     */
+    function generateEnemies() {
+        if(Math.random() > 0.975 - ratioPopEnemies) {
+            enemies.push(new Enemy());
+        }
+
     }
 
 
