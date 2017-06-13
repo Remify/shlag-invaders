@@ -325,20 +325,22 @@ void main(void) {
 
         // dessin du vaisseau (shader par defaut ici)
 
-        enemies.forEach(function (enemy) {
-
-            gl.useProgram(enemy.shader());
-            enemy.sendUniformVariables();
-            enemy.init();
-
-        });
-
+        // Dessin des rockets
         rockets.forEach(function(r) {
-
             gl.useProgram(r.shader());
             r.sendUniformVariables();
             r.init();
         });
+
+        // Dessin des ennemies
+        enemies.forEach(function (enemy) {
+
+            gl.useProgram(enemy.shader());
+            enemy.sendUniformVariables();
+            enemy.init(rockets);
+
+        });
+
     }
 
     // une bonne mani�re de gerer les evenements claviers

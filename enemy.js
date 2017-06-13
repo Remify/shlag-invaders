@@ -75,9 +75,9 @@ Enemy.prototype.initParameters = function() {
 }
 
 
-Enemy.prototype.init = function(){
+Enemy.prototype.init = function(rockets){
 	this.move();
-	this.checkPosition();
+	this.checkPosition(rockets);
     gl.activeTexture(gl.TEXTURE0); // on active l'unite de texture 0
     gl.bindTexture(gl.TEXTURE_2D, window['enemyTexture']); // on place maTexture dans l'unitÃ© active
     gl.enable(gl.BLEND);
@@ -93,15 +93,32 @@ Enemy.prototype.init = function(){
 /**
  * Effectue des actions selon la position
  */
-Enemy.prototype.checkPosition = function () {
+Enemy.prototype.checkPosition = function (rockets) {
 
     var x = this.position[0];
     var y = this.position[1];
-
+	var enemy = this;
     // Supprime l'enemy si en dehors du cadre
     if(y < -1 || x < -1 || x > 1 ) {
-        delete enemies[enemies.indexOf(this)]; // Vérifier les perf sinon splice
+        this.delete();
 	}
+
+	rockets.forEach(function (r) {
+
+        var diff_x = Math.abs(x - r.position[0]);
+        var diff_y = Math.abs(y - r.position[1]);
+        // 0.1 = largeur du carré, a ajuster
+        if ((diff_x < 0.1 && diff_x > 0) && (diff_y < 0.1 && diff_y > 0)) {
+        	console.log('in');
+            delete enemies[enemies.indexOf(enemy)];
+            delete rockets[rockets.indexOf(r)];
+        }
+	});
+
+}
+
+Enemy.prototype.delete = function () {
+    delete enemies[enemies.indexOf(this)]; // Vérifier les perf sinon splice
 }
 
 Enemy.prototype.setParameters = function(elapsed) {

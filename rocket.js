@@ -69,8 +69,8 @@ function Rocket() {
 }
 
 Rocket.prototype.initParameters = function() {
-    this.width = 0.2;
-    this.height = 0.2;
+    this.width = 0.05;
+    this.height = 0.05;
     this.position = spaceship.position;
 }
 
