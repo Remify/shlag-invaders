@@ -1,4 +1,4 @@
-var rocketShader;
+var RocketShader;
 
 function initRocketShader() {
     RocketShader = initShaders("rocket-vs","rocket-fs");
@@ -71,7 +71,7 @@ function Rocket() {
 Rocket.prototype.initParameters = function() {
     this.width = 0.2;
     this.height = 0.2;
-    this.position = [Math.random() * (1.0 - (-1.0)) + -1.0,1.1];
+    this.position = spaceship.position;
 }
 
 
@@ -99,8 +99,8 @@ Rocket.prototype.checkPosition = function () {
     var y = this.position[1];
 
     // Supprime l'rocket si en dehors du cadre
-    if(y < -1 || x < -1 || x > 1 ) {
-        delete enemies[enemies.indexOf(this)]; // Vérifier les perf sinon splice
+    if(y < -1 || y > 1 || x < -1 || x > 1 ) {
+        delete rockets[rockets.indexOf(this)]; // Vérifier les perf sinon splice
     }
 }
 
@@ -121,7 +121,7 @@ Rocket.prototype.move = function () {
     var x = this.position[0];
     var y = this.position[1];
 
-    this.setPosition(x-Math.sin(y) * 0.0030,y - 0.01);
+    this.setPosition(x,y + 0.1);
 
 }
 

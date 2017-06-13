@@ -11,6 +11,7 @@
 <script type="text/javascript" src="background.js"></script>
 <script type="text/javascript" src="spaceship.js"></script>
     <script type="text/javascript" src="enemy.js"></script>
+    <script type="text/javascript" src="rocket.js"></script>
 
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script id="heightfield-vs" type="x-shader/x-vertex">
@@ -246,6 +247,39 @@ void main(void) {
 }
 </script>
 
+
+    <script id="rocket-vs" type="x-shader/x-vertex">
+    // *** le vertex shader ***
+    attribute vec3 aVertexPosition; // la position du sommet
+    attribute vec2 aVertexCoord; // sa coordonnee de texture
+
+    uniform vec2 uPosition; // position du vaisseau
+    varying vec2 vTextureCoord; // on souhaite rasteriser la coordonnee
+
+    void main(void) {
+        // projection de la position
+        gl_Position = vec4(aVertexPosition+vec3(uPosition,0.0), 1.0);
+
+        // stockage de la coordonnee de texture
+        vTextureCoord = aVertexCoord;
+    }
+</script>
+    <script id="rocket-fs" type="x-shader/x-fragment">
+// *** le fragment shader ***
+precision highp float; // precision des nombres flottant
+
+varying vec2 vTextureCoord; // recuperation de la coord rasterisee
+uniform sampler2D uRocketTexture; // texture en entree
+
+void main(void) {
+    // couleur par defaut du vaisseau... a changer
+    //gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+    gl_FragColor = texture2D(uRocketTexture, vTextureCoord) * vec4(1,1.0,1.0,1.0);
+
+
+}
+</script>
+
 <script type="text/javascript">
 
     var fbo; // le FBO utilis� pour rendre la texture de hauteur
@@ -297,7 +331,14 @@ void main(void) {
             enemy.sendUniformVariables();
             enemy.init();
 
-        })
+        });
+
+        rockets.forEach(function(r) {
+
+            gl.useProgram(r.shader());
+            r.sendUniformVariables();
+            r.init();
+        });
     }
 
     // une bonne mani�re de gerer les evenements claviers
@@ -309,6 +350,7 @@ void main(void) {
     }
 
     function mouseClick(event) {
+        rockets.push(new Rocket());
         console.log('click')
     }
 
@@ -370,6 +412,7 @@ void main(void) {
         initBackgroundShader();
         initSpaceshipShader();
         initEnemyShader();
+        initRocketShader();
 
         initTexture();
 
@@ -378,7 +421,6 @@ void main(void) {
         background = new Background(fbo.texture(0));
         spaceship = new Spaceship();
 
-        enemies.push(new Enemy());
 
         // la couleur de fond sera noire
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -403,6 +445,7 @@ void main(void) {
     // Variables globales
     var spaceshipTexture;
     var enemyTexture;
+    var rocketTexture;
 
     function initTexture() {
         spaceshipTexture = gl.createTexture();
@@ -418,6 +461,14 @@ void main(void) {
         enemyTexture.image.src = "resources/Carre.png";
         enemyTexture.image.onload = function () {
             handleLoadedTexture(enemyTexture);
+        }
+
+
+        rocketTexture = gl.createTexture();
+        rocketTexture.image = new Image();
+        rocketTexture.image.src = "resources/Carre.png";
+        rocketTexture.image.onload = function () {
+            handleLoadedTexture(rocketTexture);
         }
     }
 
