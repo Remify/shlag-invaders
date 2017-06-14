@@ -37,4 +37,6 @@ nav {
 #GameOver{
     position: absolute;
     display: none;
+    top:150px;
+    left:110px;
 }

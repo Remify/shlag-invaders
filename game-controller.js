@@ -58,6 +58,7 @@ function gameOver() {
 
 function resetGame() {
     window.location.reload();
+
 }
 
 /**
