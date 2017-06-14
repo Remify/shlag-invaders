@@ -354,6 +354,21 @@ void main(void) {
 
     function handleKeyDown(event) {
         currentlyPressedKeys[event.keyCode] = true;
+        if (currentlyPressedKeys[32] ) {
+            ShootRockets();
+        }
+        if ( currentlyPressedKeys[38] ) {
+            moveForward();
+        }
+        if ( currentlyPressedKeys[40] ) {
+            moveBackward();
+        }
+        if ( currentlyPressedKeys[37] ) {
+            moveLeft();
+        }
+        if ( currentlyPressedKeys[39] ) {
+            moveRight();
+        }
     }
 
     function mouseClick(event) {
@@ -383,6 +398,9 @@ void main(void) {
 
     function handleKeyUp(event) {
         currentlyPressedKeys[event.keyCode] = false;
+        if (event.keyCode == 32 ) {
+            ShootRockets();
+        }
     }
 
     function handleKeys() {
@@ -395,11 +413,9 @@ void main(void) {
     function mouseMove(event) {
         // controle de la position du vaisseau en fonction de la souris
         // la position est remapp�e entre -1 et 1 pour cela
-        if(running==1) {
-            var newx = 2.0 * (event.clientX / gl.viewportWidth) - 1.0;
-            var newy = -(2.0 * (event.clientY / gl.viewportHeight) - 1.0);
-            spaceship.setPosition(newx, newy);
-        }
+//        var newx = 2.0*(event.clientX/gl.viewportWidth)-1.0;
+//        var newy = -(2.0*(event.clientY/gl.viewportHeight)-1.0);
+//        spaceship.setPosition(newx,newy);
     }
 
 
