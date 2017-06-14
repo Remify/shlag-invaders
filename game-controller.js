@@ -113,3 +113,27 @@ function calcLevel() {
 
 }
 
+function moveLeft() {
+    var pos = spaceship.getPosition();
+    if (pos[0] > -0.9) {
+        spaceship.setPosition((pos[0] - 0.05), pos[1]);
+    }
+}
+function moveRight() {
+    var pos = spaceship.getPosition();
+    if (pos[0] < 0.9) {
+        spaceship.setPosition((pos[0] + 0.05), pos[1]);
+    }
+}
+function moveForward() {
+    var pos = spaceship.getPosition();
+    if (pos[1] < 0.9) {
+        spaceship.setPosition(pos[0], (pos[1] + 0.05));
+    }
+}
+function moveBackward() {
+    var pos = spaceship.getPosition();
+    if (pos[1] > -0.9) {
+        spaceship.setPosition(pos[0], (pos[1] - 0.05));
+    }
+}

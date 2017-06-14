@@ -96,6 +96,11 @@ Spaceship.prototype.setPosition = function(x,y) {
 	this.position = [x,y];
 }
 
+Spaceship.prototype.getPosition = function() {
+    return this.position;
+}
+
+
 Spaceship.prototype.shader = function() {
 	return spaceshipShader;
 }
