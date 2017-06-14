@@ -1,5 +1,7 @@
 var running = 0;
 var score = 0;
+var level = 0;
+
 //Lancer le jeu
 function startGame(){
     score = 0;
@@ -20,6 +22,26 @@ function startGame(){
         }, 100);
         running = 1;
     }
+    requestAnimFrame(tick);
+    //SCORE
+    running = 1;
+
+    // Init level up
+    levelUp();
+
+
+    setInterval(function () {
+
+        // Augmente le score en fonction du temps si le jeu est en route
+        if(running == 1){
+            $('#score').html('Score : ' + score);
+            score++;
+
+            calcLevel(score);
+        }
+
+
+    }, 100);
 }
 
 function stopGame(){
@@ -29,5 +51,57 @@ function stopGame(){
 
 function resetGame() {
     window.location.reload();
+}
+
+/**
+ * Gère les évenements au changement de niveau
+ */
+function levelUp() {
+    // Augment le niveau
+    level++;
+
+    // Augmentation de la vitesse de pop
+    ratioPopEnemies = ratioPopEnemies + 0.0005;
+
+    // Augmente la vitesse des ennemies
+    ratioSpeedEnemies = ratioSpeedEnemies + 0.0015;
+
+    $('#lvl').html('lvl : ' + level);
+}
+
+function calcLevel() {
+
+    switch(score) {
+        case 1000:
+            levelUp();
+            break;
+        case 2000:
+            levelUp();
+            break;
+        case 3500:
+            levelUp();
+            break;
+        case 6000:
+            levelUp();
+            break;
+        case 10000:
+            levelUp();
+            break;
+        case 15500:
+            levelUp();
+            break;
+        case 21000:
+            levelUp();
+            break;
+        case 28000:
+            levelUp();
+            break;
+        case 35000:
+            levelUp();
+            break;
+        default:
+
+    }
+
 }
 
