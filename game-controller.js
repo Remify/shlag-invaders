@@ -1,27 +1,28 @@
 var running = 0;
+var score = 0;
 //Lancer le jeu
 function startGame(){
+    score = 0;
     //On lance le jeu
-    if($('#SpaceShip').length == 0){
-        $('.canvas').append('<canvas id="SpaceShip"></canvas>');
-    }
-    requestAnimFrame(tick);
-    //SCORE
-    running = 1;
-    var score = 0;
-    setInterval(function () {
-
-        if(running == 1){
-            $('#score').html('Score :' + score);
-            score++;
+    if(running != 1){
+        if($('#SpaceShip').length == 0){
+            $('.canvas').append('<canvas id="SpaceShip"></canvas>');
         }
-    }, 100);
+        requestAnimFrame(tick);
+        //SCORE
+        running = 1;
+        setInterval(function () {
+
+            if(running == 1){
+                $('#score').html('Score :' + score);
+                score++;
+            }
+        }, 100);
+        running = 1;
+    }
 }
 
 function stopGame(){
-
-    //TODO: ajouter div par dessus canvas
-
     //On interrompt le score
     running = 0;
 }
@@ -32,6 +33,6 @@ function gameOver() {
 }
 
 function resetGame() {
-
+    window.location.reload();
 }
 

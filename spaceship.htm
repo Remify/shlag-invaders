@@ -404,10 +404,15 @@ void main(void) {
 
     function tick() {
         requestAnimFrame(tick);
-        handleKeys();
         drawScene();
-        animate();
-        generateEnemies();
+        //animate();
+        if(running == 1){
+            //requestAnimFrame(tick);
+            handleKeys();
+            //drawScene();
+            animate();
+            generateEnemies();
+        }
     }
 
 
