@@ -3,6 +3,7 @@ var score = 0;
 //Lancer le jeu
 function startGame(){
     score = 0;
+    $('#GameOver').css('display','none');
     //On lance le jeu
     if(running != 1){
         if($('#SpaceShip').length == 0){
@@ -28,6 +29,7 @@ function stopGame(){
 }
 
 function gameOver() {
+    stopGame();
     $('#GameOver').css('display','inline');
     //alert("game over");
 }

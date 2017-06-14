@@ -108,11 +108,12 @@ Enemy.prototype.checkPosition = function (rockets) {
     var diff_Playyer_Enemy_x = Math.abs(x - spaceship.position[0]);
     var diff_Playyer_Enemy_y = Math.abs(y - spaceship.position[1]);
 
-    if ((diff_Playyer_Enemy_x < 0.1 && diff_Playyer_Enemy_x > 0) && (diff_Playyer_Enemy_y < 0.1 && diff_Playyer_Enemy_y > 0)) {
+    if ((diff_Playyer_Enemy_x < 0.15 && diff_Playyer_Enemy_x > 0) && (diff_Playyer_Enemy_y < 0.15 && diff_Playyer_Enemy_y > 0)) {
 
     	gameOver();
 
-    	spaceship=null;
+    	spaceship.setPosition(-10,-10);
+
     }
 
 	rockets.forEach(function (r) {
