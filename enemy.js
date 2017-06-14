@@ -95,6 +95,8 @@ Enemy.prototype.init = function(rockets){
  */
 Enemy.prototype.checkPosition = function (rockets) {
 
+
+
     var x = this.position[0];
     var y = this.position[1];
 	var enemy = this;
@@ -103,13 +105,22 @@ Enemy.prototype.checkPosition = function (rockets) {
         this.delete();
 	}
 
+    var diff_Playyer_Enemy_x = Math.abs(x - spaceship.position[0]);
+    var diff_Playyer_Enemy_y = Math.abs(y - spaceship.position[1]);
+
+    if ((diff_Playyer_Enemy_x < 0.1 && diff_Playyer_Enemy_x > 0) && (diff_Playyer_Enemy_y < 0.1 && diff_Playyer_Enemy_y > 0)) {
+
+    	gameOver();
+
+    	spaceship=null;
+    }
+
 	rockets.forEach(function (r) {
 
         var diff_x = Math.abs(x - r.position[0]);
         var diff_y = Math.abs(y - r.position[1]);
         // 0.1 = largeur du carré, a ajuster
         if ((diff_x < 0.1 && diff_x > 0) && (diff_y < 0.1 && diff_y > 0)) {
-        	console.log('in');
             delete enemies[enemies.indexOf(enemy)];
             delete rockets[rockets.indexOf(r)];
         }

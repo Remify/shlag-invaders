@@ -33,3 +33,8 @@ nav {
 #score {
     width: 100px;
 }
+
+#GameOver{
+    position: absolute;
+    display: none;
+}

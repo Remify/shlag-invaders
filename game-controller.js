@@ -26,6 +26,11 @@ function stopGame(){
     running = 0;
 }
 
+function gameOver() {
+    $('#GameOver').css('display','inline');
+    //alert("game over");
+}
+
 function resetGame() {
 
 }
