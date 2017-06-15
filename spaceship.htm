@@ -492,6 +492,7 @@ void main(void) {
     var spaceshipTexture;
     var enemyTexture;
     var rocketTexture;
+    var rocketTextureEnemy;
 
     function initTexture() {
         spaceshipTexture = gl.createTexture();
@@ -515,6 +516,13 @@ void main(void) {
         rocketTexture.image.src = "resources/fire-shoot.png";
         rocketTexture.image.onload = function () {
             handleLoadedTexture(rocketTexture);
+        }
+
+        rocketTextureEnemy = gl.createTexture();
+        rocketTextureEnemy.image = new Image();
+        rocketTextureEnemy.image.src = "resources/fire-shoot-enemy.png";
+        rocketTextureEnemy.image.onload = function () {
+            handleLoadedTexture(rocketTextureEnemy);
         }
     }
 

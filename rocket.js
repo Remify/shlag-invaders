@@ -86,7 +86,11 @@ Rocket.prototype.init = function(){
     this.move();
     this.checkPosition();
     gl.activeTexture(gl.TEXTURE0); // on active l'unite de texture 0
-    gl.bindTexture(gl.TEXTURE_2D, window['rocketTexture']); // on place maTexture dans l'unitÃ© active
+    if(this.type=="s") {
+        gl.bindTexture(gl.TEXTURE_2D, window['rocketTexture']); // on place maTexture dans l'unitÃ© active
+    }else{
+        gl.bindTexture(gl.TEXTURE_2D, window['rocketTextureEnemy']); // on place maTexture dans l'unitÃ© active
+    }
     gl.enable(gl.BLEND);
     gl.depthMask(false);
     gl.blendEquation(gl.FUNC_ADD);
