@@ -5,6 +5,7 @@ var level = 0;
 //Lancer le jeu
 function startGame(){
     score = 0;
+    spaceship.setPosition(0,0);
     $('#GameOver').css('display','none');
     //On lance le jeu
     if(running != 1){
@@ -53,7 +54,7 @@ function stopGame(){
 function gameOver() {
     stopGame();
     $('#GameOver').css('display','inline');
-    //alert("game over");
+    spaceship.setPosition(-10,-10);
 }
 
 function resetGame() {

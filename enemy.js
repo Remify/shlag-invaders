@@ -105,26 +105,39 @@ Enemy.prototype.checkPosition = function (rockets) {
         this.delete();
 	}
 
-    var diff_Playyer_Enemy_x = Math.abs(x - spaceship.position[0]);
-    var diff_Playyer_Enemy_y = Math.abs(y - spaceship.position[1]);
+    var diff_Player_Enemy_x = Math.abs(x - spaceship.position[0]);
+    var diff_Player_Enemy_y = Math.abs(y - spaceship.position[1]);
 
-    if ((diff_Playyer_Enemy_x < 0.15 && diff_Playyer_Enemy_x > 0) && (diff_Playyer_Enemy_y < 0.15 && diff_Playyer_Enemy_y > 0)) {
+    if ((diff_Player_Enemy_x < 0.15 && diff_Player_Enemy_x > 0) && (diff_Player_Enemy_y < 0.15 && diff_Player_Enemy_y > 0)) {
 
     	gameOver();
-
-    	spaceship.setPosition(-10,-10);
-
     }
 
 	rockets.forEach(function (r) {
 
-        var diff_x = Math.abs(x - r.position[0]);
-        var diff_y = Math.abs(y - r.position[1]);
-        // 0.1 = largeur du carré, a ajuster
-        if ((diff_x < 0.1 && diff_x > 0) && (diff_y < 0.1 && diff_y > 0)) {
-            delete enemies[enemies.indexOf(enemy)];
-            delete rockets[rockets.indexOf(r)];
-        }
+        var diff_x;
+        var diff_y;
+
+		if(r.type=="s") {
+            diff_x= Math.abs(x - r.position[0]);
+            diff_y = Math.abs(y - r.position[1]);
+            // 0.1 = largeur du carré, a ajuster
+            if ((diff_x < 0.1 && diff_x > 0) && (diff_y < 0.1 && diff_y > 0)) {
+                delete enemies[enemies.indexOf(enemy)];
+                delete rockets[rockets.indexOf(r)];
+				score += (level * 10) + 20;
+            }
+        }else if(r.type=="e"){
+
+            diff_x = Math.abs(spaceship.position[0] - r.position[0]);
+            diff_y = Math.abs(spaceship.position[1] - r.position[1]);
+
+            // 0.1 = largeur du carré, a ajuster
+            if ((diff_x < 0.1 && diff_x > 0) && (diff_y < 0.1 && diff_y > 0)) {
+                gameOver();
+                delete rockets[rockets.indexOf(r)];
+            }
+		}
 	});
 
 }

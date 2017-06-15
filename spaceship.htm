@@ -354,7 +354,8 @@ void main(void) {
 
     function handleKeyDown(event) {
         currentlyPressedKeys[event.keyCode] = true;
-        if (currentlyPressedKeys[32] ) {
+        //Change shoot space by A (space == 32 )
+        if (currentlyPressedKeys[65] ) {
             ShootRockets();
         }
         if ( currentlyPressedKeys[38] ) {
