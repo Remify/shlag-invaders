@@ -133,7 +133,7 @@ Enemy.prototype.checkPosition = function (rockets) {
             diff_y = Math.abs(spaceship.position[1] - r.position[1]);
 
             // 0.1 = largeur du carré, a ajuster
-            if ((diff_x < 0.1 && diff_x > 0) && (diff_y < 0.1 && diff_y > 0)) {
+            if ((diff_x < 0.15 && diff_x > 0) && (diff_y < 0.15 && diff_y > 0)) {
                 gameOver();
                 delete rockets[rockets.indexOf(r)];
             }

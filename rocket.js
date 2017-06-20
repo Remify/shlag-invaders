@@ -22,14 +22,14 @@ function initRocketShader() {
 }
 
 function Rocket(type) {
-    this.initParameters();
-
     // from enemy = e || from spaceship = s
     if(type == 'e') {
         this.type = type;
     } else {
         this.type = 's';
     }
+
+    this.initParameters();
 
     // cree un nouveau buffer sur le GPU et l'active
     this.vertexBuffer = gl.createBuffer();
@@ -76,8 +76,14 @@ function Rocket(type) {
 }
 
 Rocket.prototype.initParameters = function() {
-    this.width = 0.05;
-    this.height = 0.05;
+
+    if(this.type=="s"){
+        this.width = 0.05;
+        this.height = 0.05;
+    }else {
+        this.width = 0.10;
+        this.height = 0.10;
+    }
     this.position = spaceship.position;
 }
 
