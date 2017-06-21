@@ -80,36 +80,41 @@ function levelUp() {
 
 function calcLevel() {
 
-    switch(score) {
-        case 1000:
-            levelUp();
-            break;
-        case 2000:
-            levelUp();
-            break;
-        case 3500:
-            levelUp();
-            break;
-        case 6000:
-            levelUp();
-            break;
-        case 10000:
-            levelUp();
-            break;
-        case 15500:
-            levelUp();
-            break;
-        case 21000:
-            levelUp();
-            break;
-        case 28000:
-            levelUp();
-            break;
-        case 35000:
-            levelUp();
-            break;
-        default:
-
+    if(score > 1000 && level < 2) {
+        levelUp();
+        return null;
+    }
+    if(score > 2000 && level < 3) {
+        levelUp();
+        return null;
+    }
+    if(score > 3500 && level < 4) {
+        levelUp();
+        return null;
+    }
+    if(score > 6000 && level < 5) {
+        levelUp();
+        return null;
+    }
+    if(score > 10000 && level < 6) {
+        levelUp();
+        return null;
+    }
+    if(score > 15500 && level < 7) {
+        levelUp();
+        return null;
+    }
+    if(score > 21000 && level < 8) {
+        levelUp();
+        return null;
+    }
+    if(score > 28000 && level < 9) {
+        levelUp();
+        return null;
+    }
+    if(score > 35000 && level < 10) {
+        levelUp();
+        return null;
     }
 
 }
