@@ -138,10 +138,13 @@ Rocket.prototype.move = function () {
     var x = this.position[0];
     var y = this.position[1];
 
+    /**
+     * Si la rocket est de type s (spaceship) elle va vers le haut
+     * Sinon vers le bas
+     */
     if(this.type === 's') {
         this.setPosition(x,y + 0.1);
     } else if(this.type == 'e') {
-        console.log('type e, rocket down')
         this.setPosition(x,y - 0.01 - ratioSpeedEnemies);
     }
 
