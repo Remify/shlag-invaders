@@ -566,9 +566,9 @@ void main(void) {
         <img src="resources/banniere.png"/>
         <nav>
             <div class="btn-logic">
-                <button type="button" onclick="startGame()">Start</button>
-                <button type="button" onclick="stopGame()">Stop</button>
-                <button type="button" onclick="resetGame()">Reset</button>
+                <button type="button" onclick="startGame()" id="startbutton">Start</button>
+                <button type="button" style="display: none" onclick="stopGame()" id="stopbutton">Stop</button>
+                <button type="button" style="display: none" onclick="resetGame()" id="resetbutton">Reset</button>
             </div>
             <div class="data">
                 <div id="lvl">

@@ -9,9 +9,6 @@ function startGame(){
     $('#GameOver').css('display','none');
     //On lance le jeu
     if(running != 1){
-        if($('#SpaceShip').length == 0){
-            $('.canvas').append('<canvas id="SpaceShip"></canvas>');
-        }
         requestAnimFrame(tick);
         //SCORE
         running = 1;
@@ -24,7 +21,6 @@ function startGame(){
         }, 100);
         running = 1;
     }
-    requestAnimFrame(tick);
     //SCORE
     running = 1;
 
@@ -44,11 +40,21 @@ function startGame(){
 
 
     }, 100);
+
+   $("#startbutton").css("display", "none");
+   $("#stopbutton").css("display", "inline");
+   $("#resetbutton").css("display", "inline");
 }
 
 function stopGame(){
-    //On interrompt le score
+    //On remet tout à zéro
     running = 0;
+    score = 0;
+    level = 0;
+    enemies = [];
+    rockets = [];
+    ratioPopEnemies = 0;
+    ratioSpeedEnemies = 0;
 }
 
 function gameOver() {
