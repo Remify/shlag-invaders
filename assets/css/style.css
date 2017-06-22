@@ -12,6 +12,9 @@ body {
 }
 
 #interface {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     background: #9814DC;
     font-family: munro;
     width:800px;
@@ -54,6 +57,8 @@ button {
     font-weight:bolder;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
+    text-transform: uppercase;
+
 }
 
 button:hover {
@@ -66,6 +71,8 @@ button:active {
 }
 
 .data {
+    background-color: #212121;
+    border-radius: 40px;
     font-size: 25px;
     color: white;
     display: flex;
@@ -74,7 +81,7 @@ button:active {
 }
 
 #lvl, #score {
-    width:150px;
+    width:125px;
     text-align: center;
 }
 
