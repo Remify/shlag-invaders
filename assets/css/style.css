@@ -12,10 +12,15 @@ body {
 }
 
 #interface {
+    background: #9814DC;
     font-family: munro;
     width:800px;
     height: 800px;
 
+}
+
+#interface img {
+    width:100%;
 }
 
 #interface h1{
@@ -25,7 +30,7 @@ body {
 
 nav {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
@@ -39,4 +44,49 @@ nav {
     display: none;
     top:150px;
     left:110px;
+}
+
+button {
+    background-color: #F32249;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    font-weight:bolder;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+button:hover {
+     background-color: #212121;
+ }
+
+button:focus,
+button:active {
+    outline: none;
+}
+
+.data {
+    font-size: 25px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+#lvl, #score {
+    width:150px;
+    text-align: center;
+}
+
+.btn-logic {
+    margin-bottom: 20px;
+}
+
+.commandes {
+    color: white;
+    text-align: center;
+}
+
+.commandes img{
+    width:100px !important;
 }

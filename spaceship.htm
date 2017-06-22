@@ -1,15 +1,16 @@
-<html><head>
-<title>SpaceShip</title>
-<meta http-equiv="content-type" content="text/html; charset=windows-1252">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="game-controller.js"></script>
-<script type="text/javascript" src="gl-matrix.js"></script>
-<script type="text/javascript" src="webgl-utils.js"></script>
-<script type="text/javascript" src="game-utils.js"></script>
-<script type="text/javascript" src="fbo.js"></script>
-<script type="text/javascript" src="heightfield.js"></script>
-<script type="text/javascript" src="background.js"></script>
-<script type="text/javascript" src="spaceship.js"></script>
+<html>
+<head>
+    <title>SpaceShip</title>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="game-controller.js"></script>
+    <script type="text/javascript" src="gl-matrix.js"></script>
+    <script type="text/javascript" src="webgl-utils.js"></script>
+    <script type="text/javascript" src="game-utils.js"></script>
+    <script type="text/javascript" src="fbo.js"></script>
+    <script type="text/javascript" src="heightfield.js"></script>
+    <script type="text/javascript" src="background.js"></script>
+    <script type="text/javascript" src="spaceship.js"></script>
     <script type="text/javascript" src="enemy.js"></script>
     <script type="text/javascript" src="rocket.js"></script>
 
@@ -28,9 +29,10 @@
         // stockage de la coordonnee de texture
         vTextureCoord = aVertexCoord;
     }
-</script>
 
-<script id="heightfield-fs" type="x-shader/x-fragment">
+    </script>
+
+    <script id="heightfield-fs" type="x-shader/x-fragment">
 // *** le fragment shader ***
 precision highp float; // precision des nombres flottant
 
@@ -84,9 +86,10 @@ void main(void) {
     gl_FragColor = vec4(vec3(n),1.0);
 
 }
-</script>
 
-<script id="background-vs" type="x-shader/x-vertex">
+    </script>
+
+    <script id="background-vs" type="x-shader/x-vertex">
     // *** le vertex shader ***
     attribute vec3 aVertexPosition; // la position du sommet
     attribute vec2 aVertexCoord; // sa coordonnee de texture
@@ -100,9 +103,10 @@ void main(void) {
         // stockage de la coordonnee de texture
         vTextureCoord = aVertexCoord;
     }
-</script>
 
-<script id="background-fs" type="x-shader/x-fragment">
+    </script>
+
+    <script id="background-fs" type="x-shader/x-fragment">
 // *** le fragment shader ***
 precision highp float; // precision des nombres flottant
 
@@ -181,9 +185,10 @@ void main(void) {
     gl_FragColor = vec4(s,1.0);
 
 }
-</script>
 
-<script id="spaceship-vs" type="x-shader/x-vertex">
+    </script>
+
+    <script id="spaceship-vs" type="x-shader/x-vertex">
     // *** le vertex shader ***
     attribute vec3 aVertexPosition; // la position du sommet
     attribute vec2 aVertexCoord; // sa coordonnee de texture
@@ -198,8 +203,9 @@ void main(void) {
         // stockage de la coordonnee de texture
         vTextureCoord = aVertexCoord;
     }
-</script>
-<script id="spaceship-fs" type="x-shader/x-fragment">
+
+    </script>
+    <script id="spaceship-fs" type="x-shader/x-fragment">
 // *** le fragment shader ***
 precision highp float; // precision des nombres flottant
 
@@ -213,7 +219,8 @@ void main(void) {
 
 
 }
-</script>
+
+    </script>
 
     <script id="enemy-vs" type="x-shader/x-vertex">
     // *** le vertex shader ***
@@ -230,7 +237,8 @@ void main(void) {
         // stockage de la coordonnee de texture
         vTextureCoord = aVertexCoord;
     }
-</script>
+
+    </script>
     <script id="enemy-fs" type="x-shader/x-fragment">
 // *** le fragment shader ***
 precision highp float; // precision des nombres flottant
@@ -245,7 +253,8 @@ void main(void) {
 
 
 }
-</script>
+
+    </script>
 
 
     <script id="rocket-vs" type="x-shader/x-vertex">
@@ -263,7 +272,8 @@ void main(void) {
         // stockage de la coordonnee de texture
         vTextureCoord = aVertexCoord;
     }
-</script>
+
+    </script>
     <script id="rocket-fs" type="x-shader/x-fragment">
 // *** le fragment shader ***
 precision highp float; // precision des nombres flottant
@@ -278,270 +288,269 @@ void main(void) {
 
 
 }
-</script>
 
-<script type="text/javascript">
+    </script>
 
-    var fbo; // le FBO utilis� pour rendre la texture de hauteur
-    var heightfield; // l'objet heightfield, sa g�om�trie, son shader
-    var background; // l'objet background, sa g�om�trie, son shader
-    var spaceship; // l'objet spaceship, sa g�om�trie, son shader
-    var enemies = [] ;
-    var rockets = [];
+    <script type="text/javascript">
 
-    var elapsed;
+        var fbo; // le FBO utilis� pour rendre la texture de hauteur
+        var heightfield; // l'objet heightfield, sa g�om�trie, son shader
+        var background; // l'objet background, sa g�om�trie, son shader
+        var spaceship; // l'objet spaceship, sa g�om�trie, son shader
+        var enemies = [];
+        var rockets = [];
 
-    var ratioPopEnemies = 0.0005; // Ratio qui augmente avec le temps
-    var ratioSpeedEnemies = 0.0015;
+        var elapsed;
 
-    function drawScene() {
-        // initialisation du viewport
-        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+        var ratioPopEnemies = 0.0005; // Ratio qui augmente avec le temps
+        var ratioSpeedEnemies = 0.0015;
 
-        // efface les buffers de couleur et de profondeur
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        function drawScene() {
+            // initialisation du viewport
+            gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
 
-        // active le FBO (a partie de la, on dessine dans la texture associ�e)
-        gl.bindFramebuffer(gl.FRAMEBUFFER,fbo.id());
+            // efface les buffers de couleur et de profondeur
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        // dessin du heightfield
-        gl.useProgram(heightfield.shader());
-        heightfield.sendUniformVariables();
-        heightfield.draw();
+            // active le FBO (a partie de la, on dessine dans la texture associ�e)
+            gl.bindFramebuffer(gl.FRAMEBUFFER, fbo.id());
 
-        // desactivation du FBO (on dessine sur l'ecran maintenant)
-        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            // dessin du heightfield
+            gl.useProgram(heightfield.shader());
+            heightfield.sendUniformVariables();
+            heightfield.draw();
 
-        // dessin du background (utilise la texture dessin�e pr�c�demment)
-        gl.useProgram(background.shader());
-        background.sendUniformVariables();
-        background.draw();
+            // desactivation du FBO (on dessine sur l'ecran maintenant)
+            gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
-        // dessin du vaisseau (shader par defaut ici)
-        gl.useProgram(spaceship.shader());
-        spaceship.sendUniformVariables();
-        spaceship.init();
+            // dessin du background (utilise la texture dessin�e pr�c�demment)
+            gl.useProgram(background.shader());
+            background.sendUniformVariables();
+            background.draw();
+
+            // dessin du vaisseau (shader par defaut ici)
+            gl.useProgram(spaceship.shader());
+            spaceship.sendUniformVariables();
+            spaceship.init();
 
 
-        // dessin du vaisseau (shader par defaut ici)
+            // dessin du vaisseau (shader par defaut ici)
 
-        // Dessin des rockets
-        rockets.forEach(function(r) {
-            gl.useProgram(r.shader());
-            r.sendUniformVariables();
-            r.init();
-        });
+            // Dessin des rockets
+            rockets.forEach(function (r) {
+                gl.useProgram(r.shader());
+                r.sendUniformVariables();
+                r.init();
+            });
 
-        // Dessin des ennemies
-        enemies.forEach(function (enemy) {
+            // Dessin des ennemies
+            enemies.forEach(function (enemy) {
 
-            gl.useProgram(enemy.shader());
-            enemy.sendUniformVariables();
+                gl.useProgram(enemy.shader());
+                enemy.sendUniformVariables();
 
-            if(Math.random() > 0.997) {
-                shootRocketEnemy(enemy);
+                if (Math.random() > 0.997) {
+                    shootRocketEnemy(enemy);
+                }
+
+                enemy.init(rockets);
+
+            });
+
+        }
+
+        // une bonne mani�re de gerer les evenements claviers
+        // permet d'avoir plusieurs touches appuy�es simultan�men
+        var currentlyPressedKeys = {};
+
+        function handleKeyDown(event) {
+            currentlyPressedKeys[event.keyCode] = true;
+
+        }
+
+        function mouseClick(event) {
+            ShootRockets()
+        }
+
+        function ShootRockets() {
+
+            var r1 = new Rocket();
+            r1.setPosition(r1.position[0] - 0.09, r1.position[1] + 0.02);
+            var r2 = new Rocket();
+            r2.setPosition(r1.position[0] + 0.17, r1.position[1] + 0.02);
+
+            rockets.push(r1);
+            rockets.push(r2);
+
+        }
+
+        /**
+         *
+         */
+        function shootRocketEnemy(enemy) {
+            var r = new Rocket('e');
+            r.setPosition(enemy.position[0], enemy.position[1] - 0.2);
+            rockets.push(r);
+        }
+
+        function handleKeyUp(event) {
+            currentlyPressedKeys[event.keyCode] = false;
+            if (event.keyCode == 32) {
+                ShootRockets();
             }
-
-            enemy.init(rockets);
-
-        });
-
-    }
-
-    // une bonne mani�re de gerer les evenements claviers
-    // permet d'avoir plusieurs touches appuy�es simultan�men
-    var currentlyPressedKeys = {};
-
-    function handleKeyDown(event) {
-        currentlyPressedKeys[event.keyCode] = true;
-
-    }
-
-    function mouseClick(event) {
-        ShootRockets()
-    }
-
-    function ShootRockets(){
-
-        var r1 = new Rocket();
-        r1.setPosition(r1.position[0]-0.09,r1.position[1]+0.02);
-        var r2 = new Rocket();
-        r2.setPosition(r1.position[0]+0.17,r1.position[1]+0.02);
-
-        rockets.push(r1);
-        rockets.push(r2);
-
-    }
-
-    /**
-     *
-     */
-    function shootRocketEnemy(enemy){
-        var r = new Rocket('e');
-        r.setPosition(enemy.position[0],enemy.position[1] - 0.2);
-        rockets.push(r);
-    }
-
-    function handleKeyUp(event) {
-        currentlyPressedKeys[event.keyCode] = false;
-        if (event.keyCode == 32 ) {
-            ShootRockets();
         }
-    }
 
-    function handleKeys() {
-        if (currentlyPressedKeys[33]) {
-            // Page Up (par exemple)
-            // faire quelque chose...
+        function handleKeys() {
+            if (currentlyPressedKeys[33]) {
+                // Page Up (par exemple)
+                // faire quelque chose...
+            }
+            //Change shoot space by A (space == 32 )
+            if (currentlyPressedKeys[65]) {
+                ShootRockets();
+            }
+            if (currentlyPressedKeys[38]) {
+                moveForward();
+            }
+            if (currentlyPressedKeys[40]) {
+                moveBackward();
+            }
+            if (currentlyPressedKeys[37]) {
+                moveLeft();
+            }
+            if (currentlyPressedKeys[39]) {
+                moveRight();
+            }
         }
-        //Change shoot space by A (space == 32 )
-        if (currentlyPressedKeys[65] ) {
-            ShootRockets();
-        }
-        if ( currentlyPressedKeys[38] ) {
-            moveForward();
-        }
-        if ( currentlyPressedKeys[40] ) {
-            moveBackward();
-        }
-        if ( currentlyPressedKeys[37] ) {
-            moveLeft();
-        }
-        if ( currentlyPressedKeys[39] ) {
-            moveRight();
-        }
-    }
 
-    function mouseMove(event) {
-        // controle de la position du vaisseau en fonction de la souris
-        // la position est remapp�e entre -1 et 1 pour cela
+        function mouseMove(event) {
+            // controle de la position du vaisseau en fonction de la souris
+            // la position est remapp�e entre -1 et 1 pour cela
 //        var newx = 2.0*(event.clientX/gl.viewportWidth)-1.0;
 //        var newy = -(2.0*(event.clientY/gl.viewportHeight)-1.0);
 //        spaceship.setPosition(newx,newy);
-    }
-
-
-    // animation
-    var lastTime = 0;
-    function animate() {
-        var timeNow = new Date().getTime();
-        if (lastTime != 0) {
-            // chaque objet est susceptible de s'animer
-            var elapsed = timeNow - lastTime;
-            heightfield.setParameters(elapsed);
-            spaceship.setParameters(elapsed);
-            background.setParameters(elapsed);
-        }
-        lastTime = timeNow;
-    }
-
-    function tick() {
-        requestAnimFrame(tick);
-        drawScene();
-        //animate();
-        if(running == 1){
-            //requestAnimFrame(tick);
-            handleKeys();
-            //drawScene();
-            animate();
-            generateEnemies();
-        }
-    }
-
-
-    function webGLStart() {
-        // initialisation du canvas et des objets OpenGL
-        var canvas = document.getElementById("SpaceShip");
-        initGL(canvas);
-
-        // init FBO
-        fbo = new FBO(canvas.width,canvas.height,1,false);
-
-        // init de tous les shaders
-        initHeightfieldShader();
-        initBackgroundShader();
-        initSpaceshipShader();
-        initEnemyShader();
-        initRocketShader();
-
-        initTexture();
-
-        // init de tous les objets
-        heightfield = new Heightfield();
-        background = new Background(fbo.texture(0));
-        spaceship = new Spaceship();
-
-        // la couleur de fond sera noire
-        gl.clearColor(0.0, 0.0, 0.0, 1.0);
-
-        // active le teste de profondeur
-        //gl.enable(gl.DEPTH_TEST);
-        gl.enable(gl.DEPTH_TEST);
-        gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
-
-        /* Mouse and keyboard interaction functions */
-        //canvas.addEventListener('mousedown', tbMouseDown, true);
-        canvas.addEventListener('mousemove', mouseMove, true);
-        //canvas.addEventListener('mouseup', tbMouseUp, true);
-        canvas.addEventListener('click', mouseClick, true);
-        document.onkeydown = handleKeyDown;
-        document.onkeyup = handleKeyUp;
-
-    }
-
-    // Variables globales
-    var spaceshipTexture;
-    var enemyTexture;
-    var rocketTexture;
-    var rocketTextureEnemy;
-
-    function initTexture() {
-        spaceshipTexture = gl.createTexture();
-        spaceshipTexture.image = new Image();
-        spaceshipTexture.image.src = "resources/spaceship.png";
-        spaceshipTexture.image.onload = function () {
-            handleLoadedTexture(spaceshipTexture);
         }
 
 
-        enemyTexture = gl.createTexture();
-        enemyTexture.image = new Image();
-        enemyTexture.image.src = "resources/enemy.png";
-        enemyTexture.image.onload = function () {
-            handleLoadedTexture(enemyTexture);
+        // animation
+        var lastTime = 0;
+        function animate() {
+            var timeNow = new Date().getTime();
+            if (lastTime != 0) {
+                // chaque objet est susceptible de s'animer
+                var elapsed = timeNow - lastTime;
+                heightfield.setParameters(elapsed);
+                spaceship.setParameters(elapsed);
+                background.setParameters(elapsed);
+            }
+            lastTime = timeNow;
+        }
+
+        function tick() {
+            requestAnimFrame(tick);
+            drawScene();
+            //animate();
+            if (running == 1) {
+                //requestAnimFrame(tick);
+                handleKeys();
+                //drawScene();
+                animate();
+                generateEnemies();
+            }
         }
 
 
-        rocketTexture = gl.createTexture();
-        rocketTexture.image = new Image();
-        rocketTexture.image.src = "resources/fire-shoot.png";
-        rocketTexture.image.onload = function () {
-            handleLoadedTexture(rocketTexture);
+        function webGLStart() {
+            // initialisation du canvas et des objets OpenGL
+            var canvas = document.getElementById("SpaceShip");
+            initGL(canvas);
+
+            // init FBO
+            fbo = new FBO(canvas.width, canvas.height, 1, false);
+
+            // init de tous les shaders
+            initHeightfieldShader();
+            initBackgroundShader();
+            initSpaceshipShader();
+            initEnemyShader();
+            initRocketShader();
+
+            initTexture();
+
+            // init de tous les objets
+            heightfield = new Heightfield();
+            background = new Background(fbo.texture(0));
+            spaceship = new Spaceship();
+
+            // la couleur de fond sera noire
+            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+            // active le teste de profondeur
+            //gl.enable(gl.DEPTH_TEST);
+            gl.enable(gl.DEPTH_TEST);
+            gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+            /* Mouse and keyboard interaction functions */
+            //canvas.addEventListener('mousedown', tbMouseDown, true);
+            canvas.addEventListener('mousemove', mouseMove, true);
+            //canvas.addEventListener('mouseup', tbMouseUp, true);
+            canvas.addEventListener('click', mouseClick, true);
+            document.onkeydown = handleKeyDown;
+            document.onkeyup = handleKeyUp;
+
         }
 
-        rocketTextureEnemy = gl.createTexture();
-        rocketTextureEnemy.image = new Image();
-        rocketTextureEnemy.image.src = "resources/fire-shoot-enemy.png";
-        rocketTextureEnemy.image.onload = function () {
-            handleLoadedTexture(rocketTextureEnemy);
+        // Variables globales
+        var spaceshipTexture;
+        var enemyTexture;
+        var rocketTexture;
+        var rocketTextureEnemy;
+
+        function initTexture() {
+            spaceshipTexture = gl.createTexture();
+            spaceshipTexture.image = new Image();
+            spaceshipTexture.image.src = "resources/spaceship.png";
+            spaceshipTexture.image.onload = function () {
+                handleLoadedTexture(spaceshipTexture);
+            }
+
+
+            enemyTexture = gl.createTexture();
+            enemyTexture.image = new Image();
+            enemyTexture.image.src = "resources/enemy.png";
+            enemyTexture.image.onload = function () {
+                handleLoadedTexture(enemyTexture);
+            }
+
+
+            rocketTexture = gl.createTexture();
+            rocketTexture.image = new Image();
+            rocketTexture.image.src = "resources/fire-shoot.png";
+            rocketTexture.image.onload = function () {
+                handleLoadedTexture(rocketTexture);
+            }
+
+            rocketTextureEnemy = gl.createTexture();
+            rocketTextureEnemy.image = new Image();
+            rocketTextureEnemy.image.src = "resources/fire-shoot-enemy.png";
+            rocketTextureEnemy.image.onload = function () {
+                handleLoadedTexture(rocketTextureEnemy);
+            }
         }
-    }
 
-    /**
-     * Génère de façon aléatoire un ennemi dans enemies[]
-     * Appelé dans le tick
-     */
-    function generateEnemies() {
-        if(Math.random() > 0.975 - ratioPopEnemies) {
-            enemies.push(new Enemy());
+        /**
+         * Génère de façon aléatoire un ennemi dans enemies[]
+         * Appelé dans le tick
+         */
+        function generateEnemies() {
+            if (Math.random() > 0.975 - ratioPopEnemies) {
+                enemies.push(new Enemy());
+            }
+
         }
 
-    }
 
-
-
-
-</script>
+    </script>
 
 
 </head>
@@ -554,18 +563,26 @@ void main(void) {
         <canvas id="SpaceShip" style="border: none;" width="800" height="800"></canvas>
     </div>
     <div id="interface">
-        <h1>Shlag Invaders</h1>
+        <img src="resources/banniere.png"/>
         <nav>
             <div class="btn-logic">
                 <button type="button" onclick="startGame()">Start</button>
                 <button type="button" onclick="stopGame()">Stop</button>
                 <button type="button" onclick="resetGame()">Reset</button>
             </div>
-            <div id="lvl">
-                <p>lvl :</p>
+            <div class="data">
+                <div id="lvl">
+                    <p>lvl : </p>
+                </div>
+                <div id="score">
+                    <p>score : </p>
+                </div>
             </div>
-            <div id="score">
-                <p>score : </p>
+            <div class="commandes">
+                <h2>Commandes</h2>
+                <p>A = Tirer </p>
+                <p>Mouvements = pad directionnel</p>
+                <img src="resources/spaceship.png"/>
             </div>
         </nav>
     </div>
@@ -575,5 +592,5 @@ void main(void) {
 </div>
 
 
-
-</body></html>
+</body>
+</html>
