@@ -21,6 +21,7 @@ function initRocketShader() {
     console.log("Rocket shader initialized");
 }
 
+
 function Rocket(type) {
     // from enemy = e || from spaceship = s
     if(type == 'e') {

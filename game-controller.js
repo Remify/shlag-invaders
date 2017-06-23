@@ -84,6 +84,10 @@ function levelUp() {
     $('#lvl').html('lvl : ' + level);
 }
 
+/**
+ * Calcul des levels par rapport au score
+ * @returns {null}
+ */
 function calcLevel() {
 
     if(score > 1000 && level < 2) {
@@ -127,24 +131,28 @@ function calcLevel() {
 
 function moveLeft() {
     var pos = spaceship.getPosition();
+    // On continue pas a bouger si on approche les bords
     if (pos[0] > -0.9) {
         spaceship.setPosition((pos[0] - 0.02), pos[1]);
     }
 }
 function moveRight() {
     var pos = spaceship.getPosition();
+    // On continue pas a bouger si on approche les bords
     if (pos[0] < 0.9) {
         spaceship.setPosition((pos[0] + 0.02), pos[1]);
     }
 }
 function moveForward() {
     var pos = spaceship.getPosition();
+    // On continue pas a bouger si on approche les bords
     if (pos[1] < 0.9) {
         spaceship.setPosition(pos[0], (pos[1] + 0.02));
     }
 }
 function moveBackward() {
     var pos = spaceship.getPosition();
+    // On continue pas a bouger si on approche les bords
     if (pos[1] > -0.9) {
         spaceship.setPosition(pos[0], (pos[1] - 0.02));
     }

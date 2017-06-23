@@ -68,6 +68,9 @@ function Spaceship() {
     console.log("spaceship initialized");
 }
 
+/**
+ * Position du vaiseau au début
+ */
 Spaceship.prototype.initParameters = function() {
 	this.width = 0.2;
 	this.height = 0.2;

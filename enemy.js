@@ -158,12 +158,16 @@ Enemy.prototype.shader = function() {
 	return EnemyShader;
 }
 
+/**
+ *  Mouvement des ennemies
+ */
 Enemy.prototype.move = function () {
 
 	var x = this.position[0];
 	var y = this.position[1];
 
-	this.setPosition(x-Math.sin(y) * 0.0030,y - ratioSpeedEnemies);
+	// Courbe de mouvement
+	this.setPosition(x + Math.sin(y) * 0.0010, y - ratioSpeedEnemies);
 
 }
 
